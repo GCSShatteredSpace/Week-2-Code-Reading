@@ -58,6 +58,7 @@ public class Tile : MonoBehaviour {
 		if (!gctrl.commandable)
 			return;
 		if (Input.GetButton ("Fire2") && (current || tilePosition == firePosition)) {
+			// Avoid cancelling a bunch of commands at once when holding the right button 
 			rightHold = true;
 		} else {
 			if(rightHold){
@@ -73,7 +74,7 @@ public class Tile : MonoBehaviour {
 
 		if (firePosition==tilePosition) {
 			gctrl.hold = true;					//enter targeting mode
-			gctrl.targetStart = tilePosition;		
+			gctrl.targetStart = tilePosition;	// Horrifying code: tile shouldn't mess with gctrl's variables		
 		}
 	}
 
@@ -92,7 +93,7 @@ public class Tile : MonoBehaviour {
 	void Update(){ 								//this part is waht determines the display on each tile
 		playerPosition = gctrl.playerPosition;	
 		firePosition = gctrl.firePosition;		//in the case of weapons with recoil effect, fireposition!=playerposition
-
+		// This bit is horrible, individual comments needed.
 		if (near (playerPosition, tilePosition)&&gctrl.moveindex<gctrl.maxSteps) {
 			valid = true;
 		} else {
